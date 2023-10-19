@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <style>
+        body {
+            background-color: #f8f9fa;  /* Lighter gray background */
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center content vertically */
+            height: 100vh; /* Full viewport height */
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        #imageUploader, button {
+            padding: 10px;
+            margin: 45px 0;  /* Increased margin */
+        }
+
+        #image-list img {
+            width: 100%;
+            max-width: 400px;
+            margin: 85px 0;  /* Increased margin */
+            display: block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a soft shadow for the images */
+            border-radius: 5px;  /* Rounds the corners of the images */
+        }
+
+        button {
+            background-color: #007BFF;  /* Blue button color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;  /* Rounded button corners */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        button:hover {
+            background-color: #0056b3;  /* Darker blue on hover */
+        }
+
+        /* Container to wrap the content and assist with centering */
+        .container {
+            width: 80%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Images</h2>
+        <input type="file" id="imageUploader" accept="image/*" multiple>
+        <button onclick="displayImages()">Upload</button>
+
+        <h2>Uploaded Images</h2>
+        <div id="image-list"></div>
+    </div>
+
+    <script>
+        function displayImages() {
+            const fileList = document.getElementById('imageUploader').files;
+            const imageList = document.getElementById('image-list');
+
+            for (let i = 0; i < fileList.length; i++) {
+                const file = fileList[i];
+
+                // Ensure it's an image
+                if (!file.type.startsWith('image/')) continue;
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.onload = function() {
+                    URL.revokeObjectURL(this.src);
+                }
+                imageList.appendChild(img);
+            }
+        }
+    </script>
+</body>
+</html>
